@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Signing</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+<nav class="navbar">
+    <div class="logo"><a href="index.html" style="text-decoration:none;color:inherit;">Signing Server</a></div>
+</nav>
+<main class="simple-page">
+    <h1>Document Signing System</h1>
+
+    <div class="tabs">
+        <div class="tab active" onclick="openTab(event, 'signTab')">Sign Document</div>
+        <div class="tab" onclick="openTab(event, 'verifyTab')">Verify Signature</div>
+    </div>
+
+    <div id="signTab" class="tab-content active">
+        <h2>Upload a Document for Signing</h2>
+        <form id="uploadForm">
+            <div class="form-group">
+                <label for="fileInput">Select Document to Sign:</label>
+                <input type="file" id="fileInput" required>
+            </div>
+            <button type="submit" id="signBtn">Upload &amp; Sign</button>
+        </form>
+        <p id="status"></p>
+    </div>
+
+    <div id="verifyTab" class="tab-content">
+        <h2>Verify Document Signature</h2>
+        <form id="verifyForm">
+            <div class="form-group">
+                <label for="verifyFileInput">Select Original Document:</label>
+                <input type="file" id="verifyFileInput" required>
+            </div>
+            <div class="form-group">
+                <label for="signatureInput">Paste Signature:</label>
+                <textarea id="signatureInput" placeholder="Paste the signature here..." required></textarea>
+            </div>
+            <button type="submit" id="verifyBtn">Verify Signature</button>
+        </form>
+        <p id="verifyStatus"></p>
+    </div>
+</main>
+<footer>
+    <p>Created by Slobodanka Pishtolova &amp; Damjan Mitrovski</p>
+</footer>
+
+<script src="index.js"></script>
+</body>
+</html>
