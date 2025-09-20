@@ -41,7 +41,7 @@ function App() {
     // Auto-clear after timeout
     setTimeout(() => {
       targetSetter('');
-    }, type === "success" ? 12000 : 5000);
+    }, type === "success" ? 12000 : 12000);
   };
 
   const copyToClipboard = async (text) => {
@@ -158,7 +158,8 @@ function App() {
 
         if (!response.ok) {
           const errorText = await response.text();
-          throw new Error(errorText || "Server error: " + response.status);
+          // Enhanced error message for server errors
+          throw new Error(`Server error: ${errorText || response.status}. Please check if the signing server is running.`);
         }
 
         const isValid = await response.json();
@@ -171,18 +172,24 @@ function App() {
           );
         } else {
           displayMessage(
-            `❌ Signature is INVALID!\n\nFile: ${file.name}\n\nThe document may have been modified or the signature is incorrect.`,
+            `❌ Signature is INVALID!\n\nFile: ${file.name}\n\nThe document may have been modified, the signature is incorrect, or there's a key mismatch.`,
             "error",
             setVerifyStatus
           );
         }
 
       } catch (err) {
-        displayMessage(
-          `Error verifying document: ${err.message}`,
-          "error",
-          setVerifyStatus
-        );
+        // Enhanced error messages with better descriptions
+        let errorMessage = "";
+        if (err.message.includes("Server error")) {
+          errorMessage = `Validity Error: Unable to verify document.\n\nPlease ensure the signature is sent within a correct format and that the correct document is selected.`;
+        } else if (err.message.includes("Failed to fetch")) {
+          errorMessage = `Network Error: Cannot connect to signing server.\n\nPlease check your connection and server status.`;
+        } else {
+          errorMessage = `Verification Error: ${err.message}`;
+        }
+
+        displayMessage(errorMessage, "error", setVerifyStatus);
       } finally {
         setIsVerifyLoading(false);
       }
@@ -193,6 +200,19 @@ function App() {
 
   const openTab = (tabName) => {
     setActiveTab(tabName);
+  };
+
+  // Helper function to get message styling classes
+  const getMessageClass = (message, isSuccess) => {
+    if (!message) return '';
+    // Check for INVALID first to avoid matching "VALID!" in "INVALID!"
+    if (message.includes('INVALID!') || message.includes('Error') || message.includes('error')) {
+      return 'error-message';
+    }
+    if (isSuccess || message.includes('successfully') || message.includes('✅ Signature is VALID!')) {
+      return 'success-message';
+    }
+    return 'error-message'; // Default to error for safety
   };
 
   return (
@@ -253,8 +273,8 @@ function App() {
             {/* Status Message */}
             <div
               id="status"
+              className={getMessageClass(status, status.includes('successfully'))}
               style={{
-                backgroundColor: status.includes('successfully') ? 'green' : (status ? 'red' : 'transparent'),
                 display: status ? 'block' : 'none'
               }}
             >
@@ -321,8 +341,8 @@ function App() {
             {/* Verify Status Message */}
             <div
               id="verifyStatus"
+              className={getMessageClass(verifyStatus, verifyStatus.includes('VALID!'))}
               style={{
-                backgroundColor: verifyStatus.includes('VALID!') ? 'green' : (verifyStatus ? 'red' : 'transparent'),
                 display: verifyStatus ? 'block' : 'none'
               }}
             >

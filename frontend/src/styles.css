@@ -590,7 +590,10 @@ footer {
     padding: 20px;
 }
 
-/* Enhanced status messages with neon styling */
+/* FIXED: Enhanced status messages with proper success (green) and error (red) styling */
+/* Success messages - when they contain 'successfully' or 'VALID!' */
+#status.success-message,
+#verifyStatus.success-message,
 #status[style*="background-color: green"],
 #verifyStatus[style*="background-color: green"] {
     background-color: rgba(57, 255, 20, 0.2) !important;
@@ -599,8 +602,16 @@ footer {
     text-shadow: 0 0 4px var(--neon) !important;
     box-shadow: 0 0 8px rgba(57, 255, 20, 0.3) !important;
     backdrop-filter: blur(4px) !important;
+    border-radius: 8px !important;
+    padding: 20px !important;
+    margin-top: 1rem !important;
+    white-space: pre-line !important;
+    line-height: 1.5 !important;
 }
 
+/* Error messages - when they contain errors or 'INVALID!' */
+#status.error-message,
+#verifyStatus.error-message,
 #status[style*="background-color: red"],
 #verifyStatus[style*="background-color: red"] {
     background-color: rgba(255, 57, 57, 0.2) !important;
@@ -609,6 +620,25 @@ footer {
     text-shadow: 0 0 4px #ff3939 !important;
     box-shadow: 0 0 8px rgba(255, 57, 57, 0.3) !important;
     backdrop-filter: blur(4px) !important;
+    border-radius: 8px !important;
+    padding: 20px !important;
+    margin-top: 1rem !important;
+    white-space: pre-line !important;
+    line-height: 1.5 !important;
+}
+
+/* Ensure all status messages have proper spacing and formatting */
+#status,
+#verifyStatus {
+    margin-top: 1rem;
+    font-weight: bold;
+    color: var(--light-text);
+    text-align: center;
+    min-height: 20px;
+    white-space: pre-line;
+    padding: 20px;
+    line-height: 1.5;
+    border-radius: 8px;
 }
 
 /* Responsive design for tabs */
