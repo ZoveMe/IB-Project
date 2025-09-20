@@ -490,6 +490,7 @@ footer {
 
 .form-group textarea::placeholder {
     color: rgba(225, 231, 239, 0.6);
+    padding: 20px;
 }
 
 /* Verification form button styling */
@@ -586,6 +587,7 @@ footer {
     color: var(--neon);
     text-shadow: 0 0 8px var(--neon);
     text-align: center;
+    padding: 20px;
 }
 
 /* Enhanced status messages with neon styling */
