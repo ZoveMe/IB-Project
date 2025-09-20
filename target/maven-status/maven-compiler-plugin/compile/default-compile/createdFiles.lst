@@ -1,0 +1,5 @@
+com\signing\app\DocumentSigningApplication.class
+com\signing\app\DocumentSigningController$DocumentVerificationRequest.class
+com\signing\app\KeyPairGeneratorUtil.class
+com\signing\app\DocumentSigningController.class
+com\signing\app\DigitalSignatureUtil.class
